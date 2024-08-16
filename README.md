@@ -1,1 +1,3 @@
 # PlantTimer
+
+My goal with this is to make a server which can run and provide a webpage with timer/countdowns of the next "watering date" of that plant. This application should support more than one plant, multiple plant types/watering rates, etc...
