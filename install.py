@@ -1,10 +1,11 @@
 import sqlite3
-import bcrypt
-from cryptography.fernet import Fernet
-import os
 import tkinter as tk
 
 
+# I've commented this out for the time being...
+
+
+"""
 def set_master():
     global password
     password = tb_password.get()
@@ -45,3 +46,4 @@ btn_create.grid(column=0, row=1, columnspan=2)
 
 
 window.mainloop()
+"""
