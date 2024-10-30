@@ -20,3 +20,8 @@ except sqlite3.OperationalError:
     # OR SQLITE3 NOT FOUND, PLEASE SEE DOCUMENTATION AND INSTALL BEFORE USING PROGRAM
     tkinter.messagebox.showerror(title="SQLite not installed", message="Please install SQLite before use.")
     exit()
+
+
+'''
+BEFORE DOING ANY MORE WORK IN TKINTER, MAKE SURE TO RESEARCH FRAMES IN GREATER DETAIL...
+'''
