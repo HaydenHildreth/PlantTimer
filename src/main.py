@@ -8,7 +8,7 @@ def main():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plant Monitor</title>
+    <title>Plant Scheduler</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -142,7 +142,7 @@ def main():
 </head>
 <body>
     <div class="container">
-        <h1>Plant Monitor</h1>
+        <h1>Plant Scheduler</h1>
 
         <div id="add-plant-form">
             <h2>Add New Plant</h2>
