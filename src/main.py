@@ -1,4 +1,5 @@
 from bottle import route, run
+from datetime import datetime
 
 @route('/')
 def main():
@@ -55,6 +56,11 @@ def main():
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .needs-watering {
+            background-color: #ffe0e0; /* Light red background */
+            border-color: #ffb3b3; /* Light red border */
         }
 
         .plant-details {
@@ -204,7 +210,14 @@ def main():
             const lastWatering = new Date(lastWateringDate);
             const nextWatering = new Date(lastWatering);
             nextWatering.setDate(lastWatering.getDate() + parseInt(frequency));
-            return nextWatering.toLocaleDateString();
+            return nextWatering;
+        }
+
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
         }
 
         function addPlant() {
@@ -212,16 +225,19 @@ def main():
             const description = document.getElementById('new-plant-description').value;
             const frequency = document.getElementById('new-watering-frequency').value;
             const amount = document.getElementById('new-watering-amount').value;
-            const lastWateringDate = document.getElementById('new-last-watering-date').value;
+            const lastWateringDateInput = document.getElementById('new-last-watering-date').value;
 
-            if (name && frequency && lastWateringDate) {
+            if (name && frequency && lastWateringDateInput) {
+                const lastWateringDate = new Date(lastWateringDateInput);
+                const nextWateringDate = calculateNextWateringDate(lastWateringDate, frequency);
+
                 const newPlant = {
                     plantName: name,
                     plantDescription: description,
                     wateringFrequency: frequency,
                     wateringAmount: amount,
-                    lastWateringDate: lastWateringDate,
-                    nextWateringDate: calculateNextWateringDate(lastWateringDate, frequency)
+                    lastWateringDate: formatDate(lastWateringDate),
+                    nextWateringDate: formatDate(nextWateringDate)
                 };
                 plants.push(newPlant);
                 savePlants();
@@ -243,10 +259,17 @@ def main():
         function displayPlants() {
             const plantList = document.getElementById('plant-list');
             plantList.innerHTML = ''; // Clear the current list
+            const now = new Date();
 
             plants.forEach((plant, index) => {
                 const listItem = document.createElement('li');
                 listItem.classList.add('plant-item');
+
+                const nextWatering = new Date(plant.nextWateringDate);
+                if (nextWatering < now) {
+                    listItem.classList.add('needs-watering');
+                }
+
                 listItem.innerHTML = `
                     <div class="plant-details">
                         <strong>${plant.plantName}</strong><br>
@@ -284,16 +307,19 @@ def main():
             const description = document.getElementById('edit-plant-description').value;
             const frequency = document.getElementById('edit-watering-frequency').value;
             const amount = document.getElementById('edit-watering-amount').value;
-            const lastWateringDate = document.getElementById('edit-last-watering-date').value;
+            const lastWateringDateInput = document.getElementById('edit-last-watering-date').value;
 
-            if (name && frequency && lastWateringDate) {
+            if (name && frequency && lastWateringDateInput) {
+                const lastWateringDate = new Date(lastWateringDateInput);
+                const nextWateringDate = calculateNextWateringDate(lastWateringDate, frequency);
+
                 plants[index] = {
                     plantName: name,
                     plantDescription: description,
                     wateringFrequency: frequency,
                     wateringAmount: amount,
-                    lastWateringDate: lastWateringDate,
-                    nextWateringDate: calculateNextWateringDate(lastWateringDate, frequency)
+                    lastWateringDate: formatDate(lastWateringDate),
+                    nextWateringDate: formatDate(nextWateringDate)
                 };
                 savePlants();
                 displayPlants();
@@ -322,7 +348,7 @@ def main():
     </script>
 </body>
 </html>
-        '''
+    '''
 
 if __name__ == '__main__':
     run(host='localhost', port=8080, debug=True)
