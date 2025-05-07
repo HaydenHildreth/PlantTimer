@@ -144,11 +144,75 @@ def main():
         #edit-plant-form {
             display: none; /* Hidden by default */
         }
+        
+        .theme-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: color 0.3s ease;
+        }
+
+        body.dark-mode .theme-toggle {
+            color: #fff;
+        }
+        
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        body.dark-mode .container {
+            background-color: #1e1e1e;
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .plant-item {
+            background-color: #333;
+            border-color: #444;
+            color: #ddd;
+        }
+        
+        body.plant-actions button:first-child {
+            background-color: #f0ad4e;
+        }
+
+        body.plant-actions button:first-child:hover {
+            background-color: #eea236;
+        }
+
+        body.dark-mode .plant-actions button:hover {
+            background-color: #c9302c;
+        }
+        
+        body.dark-mode .plant-actions button:first-child:hover {
+            background-color: #eea236;
+        }
+
+        body.dark-mode #add-plant-form,
+        body.dark-mode #edit-plant-form {
+            background-color: #333;
+            border: 1px solid #444;
+        }
+
+        body.dark-mode #add-plant-form input,
+        body.dark-mode #edit-plant-form input {
+            background-color: #555;
+            color: #fff;
+            border: 1px solid #666;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Plant Scheduler</h1>
+        
+        <button id="theme-toggle" class="theme-toggle">🌙</button>
+
 
         <div id="add-plant-form">
             <h2>Add New Plant</h2>
@@ -344,6 +408,25 @@ def main():
 
         function savePlants() {
             localStorage.setItem('plants', JSON.stringify(plants));
+        }
+        
+        const themeToggle = document.getElementById('theme-toggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            themeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Set theme based on user preference or saved setting
+        if (localStorage.getItem('theme') === 'dark' || (localStorage.getItem('theme') === null && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.textContent = '☀️';
+        } else {
+            themeToggle.textContent = '🌙';
         }
     </script>
 </body>
