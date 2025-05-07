@@ -58,10 +58,10 @@ def main():
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
-        .needs-watering {
-            background-color: #ffe0e0; /* Light red background */
-            border-color: #ffb3b3; /* Light red border */
-        }
+		.needs-watering {
+			background-color: var(--needs-watering-bg-light);
+			border-color: var(--needs-watering-border-light);
+		}
 
         .plant-details {
             flex-grow: 1;
@@ -205,6 +205,43 @@ def main():
             color: #fff;
             border: 1px solid #666;
         }
+		
+		:root {
+			--needs-watering-bg-light: #ffe0e0;
+			--needs-watering-border-light: #ffb3b3;
+			--needs-watering-bg-dark: #ff4d4d;
+			--needs-watering-border-dark: #ff1a1a;
+		}
+
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			margin: 0;
+			background-color: #f4f7f6;
+			color: #333;
+			line-height: 1.6;
+			transition: background-color 0.3s ease, color 0.3s ease;
+		}
+
+		body.dark-mode {
+			background-color: #121212;
+			color: #ffffff;
+		}
+
+		body.dark-mode .container {
+			background-color: #1e1e1e;
+			box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+		}
+
+		body.dark-mode .plant-item {
+			background-color: #333;
+			border-color: #444;
+			color: #ddd;
+		}
+
+		body.dark-mode .needs-watering {
+			background-color: var(--needs-watering-bg-dark);
+			border-color: var(--needs-watering-border-dark);
+		}
     </style>
 </head>
 <body>
@@ -410,24 +447,56 @@ def main():
             localStorage.setItem('plants', JSON.stringify(plants));
         }
         
-        const themeToggle = document.getElementById('theme-toggle');
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+		const themeToggle = document.getElementById('theme-toggle');
+		const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            themeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-        }
+		function toggleTheme() {
+			document.body.classList.toggle('dark-mode');
+			themeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+			localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+		}
 
-        themeToggle.addEventListener('click', toggleTheme);
+		themeToggle.addEventListener('click', toggleTheme);
 
-        // Set theme based on user preference or saved setting
-        if (localStorage.getItem('theme') === 'dark' || (localStorage.getItem('theme') === null && prefersDarkScheme.matches)) {
-            document.body.classList.add('dark-mode');
-            themeToggle.textContent = '☀️';
-        } else {
-            themeToggle.textContent = '🌙';
-        }
+		// Set theme based on user preference or saved setting
+		if (localStorage.getItem('theme') === 'dark' || (localStorage.getItem('theme') === null && prefersDarkScheme.matches)) {
+			document.body.classList.add('dark-mode');
+			themeToggle.textContent = '☀️';
+		} else {
+			themeToggle.textContent = '🌙';
+		}
+		
+		function displayPlants() {
+			const plantList = document.getElementById('plant-list');
+			plantList.innerHTML = ''; // Clear the current list
+			const now = new Date();
+
+			plants.forEach((plant, index) => {
+				const listItem = document.createElement('li');
+				listItem.classList.add('plant-item');
+
+				const nextWatering = new Date(plant.nextWateringDate);
+				if (nextWatering < now) {
+					listItem.classList.add('needs-watering');
+				}
+
+				listItem.innerHTML = `
+					<div class="plant-details">
+						<strong>${plant.plantName}</strong><br>
+						${plant.plantDescription ? plant.plantDescription + '<br>' : ''}
+						Watering Frequency: ${plant.wateringFrequency} days<br>
+						Watering Amount: ${plant.wateringAmount || 'N/A'}<br>
+						Last Watering: ${plant.lastWateringDate}<br>
+						Next Watering: ${plant.nextWateringDate}
+					</div>
+					<div class="plant-actions">
+						<button onclick="editPlant(${index})">Edit</button>
+						<button onclick="deletePlant(${index})">Delete</button>
+					</div>
+				`;
+				plantList.appendChild(listItem);
+			});
+		}
     </script>
 </body>
 </html>
