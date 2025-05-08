@@ -1,9 +1,9 @@
 # PlantTimer
 
 ## Dependencies
-Python 3
+* Python 3
 
-Bottle (package)
+* Bottle (package)
 ### Instructions
 Install bottle
 ```
