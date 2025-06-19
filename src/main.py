@@ -1,6 +1,8 @@
 from bottle import route, run
 from datetime import datetime
 
+PORTNUMBER=8000
+
 @route('/')
 def main():
     return '''
@@ -503,4 +505,4 @@ def main():
     '''
 
 if __name__ == '__main__':
-    run(host='localhost', port=8080, debug=True)
+    run(host='0.0.0.0', port=PORTNUMBER, debug=True)
