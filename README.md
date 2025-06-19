@@ -8,7 +8,6 @@ This is a software for tracking when you need to water and care for your plants.
 ![Screenshot](https://github.com/HaydenHildreth/PlantTimer/blob/main/assets/preview2.png)
 ![Screenshot](https://github.com/HaydenHildreth/PlantTimer/blob/main/assets/preview3.png)
 ![Screenshot](https://github.com/HaydenHildreth/PlantTimer/blob/main/assets/preview4.png)
-![Screenshot](https://github.com/HaydenHildreth/PlantTimer/blob/main/assets/preview5.png)
 
 ## Dependencies
 * Python 3
