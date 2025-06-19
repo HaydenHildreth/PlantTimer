@@ -3,6 +3,7 @@ from datetime import datetime
 
 # Set port number for server to run on
 PORTNUMBER=8080
+VERSIONNO=1.0.0
 
 @route('/')
 def main():
