@@ -1,5 +1,15 @@
 # PlantTimer
 
+## Purpose
+This is a software for tracking when you need to water and care for your plants. It can run as a server, and be viewed remotely on other devices. Either via LAN or WAN connection.
+
+## Screenshots
+![Screenshot](https://github.com/HaydenHildreth/PlantTimer/blob/main/assets/preview1.png)
+![Screenshot](https://github.com/HaydenHildreth/PlantTimer/blob/main/assets/preview2.png)
+![Screenshot](https://github.com/HaydenHildreth/PlantTimer/blob/main/assets/preview3.png)
+![Screenshot](https://github.com/HaydenHildreth/PlantTimer/blob/main/assets/preview4.png)
+![Screenshot](https://github.com/HaydenHildreth/PlantTimer/blob/main/assets/preview5.png)
+
 ## Dependencies
 * Python 3
 
