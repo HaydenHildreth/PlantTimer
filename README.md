@@ -14,7 +14,8 @@ This is a software for tracking when you need to water and care for your plants.
 * Python 3
 
 * Bottle (package)
-### Instructions
+
+## Instructions
 Install bottle
 ```
 pip install bottle
@@ -36,3 +37,11 @@ python src/main.py
 ```
 
 Add plants on your new server, at 127.0.0.1:8080
+
+## Network setup (WIP)
+This portion depends how you intend to use the program, and the Operating System which is hosting the service as well.
+
+### Windows
+
+### Linux
+ufw
